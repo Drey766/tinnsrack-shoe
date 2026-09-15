@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-brand-black text-brand-light font-body antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display text-brand-white;
+  }
+  ::selection {
+    @apply bg-brand-gold/30 text-brand-white;
+  }
+  *:focus-visible {
+    outline: 2px solid #C9A227;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* ---------- Buttons ---------- */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3
+      text-sm font-semibold uppercase tracking-wider text-brand-black
+      transition-transform duration-200 active:scale-95;
+    background: linear-gradient(90deg, #C9A227, #E0BC46, #C9A227, #A5851C);
+    background-size: 200% auto;
+    animation: gold-shimmer 3s linear infinite;
+  }
+  .btn-primary:hover {
+    animation-duration: 1.4s;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border
+      border-brand-gold px-7 py-3 text-sm font-semibold uppercase tracking-wider
+      text-brand-gold transition-colors duration-200 hover:bg-brand-gold hover:text-brand-black;
+  }
+
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366]
+      px-7 py-3 text-sm font-semibold text-brand-black transition-transform
+      duration-200 hover:brightness-105 active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-1.5 text-sm text-brand-muted transition-colors
+      duration-200 hover:text-brand-gold;
+  }
+
+  /* ---------- Form elements ---------- */
+  .input {
+    @apply w-full rounded-lg border border-brand-mid bg-brand-dark2 px-4 py-3
+      text-brand-light placeholder:text-brand-muted/70 outline-none transition-colors
+      focus:border-brand-gold;
+  }
+
+  .label {
+    @apply text-xs font-semibold uppercase tracking-[0.14em] text-brand-muted;
+  }
+
+  /* ---------- Surfaces ---------- */
+  .card {
+    @apply rounded-2xl border border-brand-mid bg-brand-dark;
+  }
+
+  .shoe-card {
+    @apply relative overflow-hidden rounded-2xl border border-brand-mid bg-brand-dark
+      transition-transform duration-300 hover:-translate-y-1;
+  }
+  .shoe-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 30%, rgba(201, 162, 39, 0.15), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .shoe-card:hover::after {
+    opacity: 1;
+  }
+
+  .container-site {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .section-tag {
+    @apply block font-accent italic text-brand-gold text-lg sm:text-xl;
+  }
+
+  /* ---------- Blog prose ---------- */
+  .prose-article {
+    @apply text-brand-light/90 leading-relaxed;
+  }
+  .prose-article h2 {
+    @apply mt-10 mb-3 font-display text-2xl text-brand-white;
+  }
+  .prose-article p {
+    @apply mb-5 text-[1.05rem] leading-[1.8];
+  }
+  .prose-article a {
+    @apply text-brand-gold underline underline-offset-2;
+  }
+
+  /* ---------- Badges ---------- */
+  .badge-new {
+    @apply inline-flex items-center rounded-full bg-brand-gold px-3 py-1 text-[11px]
+      font-bold uppercase tracking-wide text-brand-black;
+  }
+  .badge-sale {
+    @apply inline-flex items-center rounded-full bg-brand-wine px-3 py-1 text-[11px]
+      font-bold uppercase tracking-wide text-brand-white;
+  }
+  .badge-lowstock {
+    @apply inline-flex items-center rounded-full bg-brand-blush px-3 py-1 text-[11px]
+      font-bold uppercase tracking-wide text-brand-black;
+  }
+  .badge-soldout {
+    @apply inline-flex items-center rounded-full bg-brand-mid px-3 py-1 text-[11px]
+      font-bold uppercase tracking-wide text-brand-light;
+  }
+  .badge-sameday {
+    @apply inline-flex items-center gap-1 rounded-full border border-brand-gold/60 px-3 py-1
+      text-[11px] font-semibold uppercase tracking-wide text-brand-gold;
+  }
+
+  .occasion-tag {
+    @apply inline-flex items-center rounded-full bg-brand-blush/15 px-2.5 py-1 text-[11px]
+      font-medium text-brand-blush-light;
+  }
+
+  .size-chip {
+    @apply flex h-11 min-w-11 items-center justify-center rounded-lg border border-brand-mid
+      px-3 text-sm text-brand-light transition-colors duration-150
+      hover:border-brand-gold data-[selected=true]:border-brand-gold
+      data-[selected=true]:bg-brand-gold data-[selected=true]:text-brand-black
+      disabled:cursor-not-allowed disabled:opacity-30;
+  }
+}
+
+/* Marquee strip */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+/* Heel-click micro interaction */
+.btn-step:active {
+  transform: scale(0.94);
+}
