@@ -1,39 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Phone, Clock, Instagram, ChevronDown } from "lucide-react";
+import AccordionIcon from "@/components/ui/AccordionIcon";
 import faqs from "@/data/faqs.json";
 import { FAQ } from "@/types";
+import { SHOP, whatsappLink } from "@/lib/utils";
 
 const faqList = faqs as FAQ[];
-
-function FaqAccordion() {
-  const [openId, setOpenId] = useState<string | null>(faqList[0]?.id ?? null);
-  return (
-    <div className="space-y-3">
-      {faqList.map((f) => {
-        const open = openId === f.id;
-        return (
-          <div key={f.id} className="card overflow-hidden">
-            <button
-              onClick={() => setOpenId(open ? null : f.id)}
-              className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left"
-            >
-              <span className="font-semibold text-brand-white">{f.q}</span>
-              <ChevronDown
-                size={18}
-                className={`shrink-0 text-brand-gold transition-transform ${open ? "rotate-180" : ""}`}
-              />
-            </button>
-            {open && (
-              <p className="px-5 pb-4 text-sm leading-relaxed text-brand-light/85">{f.a}</p>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -46,104 +19,129 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="container-site section-padding">
-      <div className="mb-12 text-center">
-        <span className="section-tag">Come Find Us</span>
-        <h1 className="mt-2 text-4xl font-bold">Visit Us on Tom Mboya</h1>
-      </div>
+    <div>
+      <section className="container-site grid gap-14 pb-20 pt-12 sm:pt-16 lg:grid-cols-12 lg:gap-12 lg:pb-28">
+        <div className="lg:col-span-6">
+          <h1 className="display-xl !text-[clamp(3rem,7vw,6.5rem)]">Visit the boutique.</h1>
+          <p className="lede mt-8">
+            Come and try on as many pairs as you like at our shop in Beba Beba Trade Center. Or
+            message us and we&apos;ll help you choose from wherever you are.
+          </p>
+        </div>
 
-      <div className="grid gap-10 lg:grid-cols-2">
-        <div className="space-y-6">
-          <div className="card space-y-4 p-6">
-            <div className="flex items-start gap-3">
-              <MapPin size={20} className="mt-0.5 shrink-0 text-brand-gold" />
-              <div>
-                <p className="font-semibold text-brand-white">Shop F17, Beba Beba Trade Center</p>
-                <p className="text-sm text-brand-muted">Tom Mboya Street, Nairobi</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Phone size={20} className="mt-0.5 shrink-0 text-brand-gold" />
-              <div>
-                <a href="tel:0768008365" className="font-semibold text-brand-white hover:text-brand-gold">0768 008 365</a>
-                <p className="text-sm text-brand-muted">Call or WhatsApp</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Clock size={20} className="mt-0.5 shrink-0 text-brand-gold" />
-              <div>
-                <p className="font-semibold text-brand-white">Mon–Sat, 9AM–7PM</p>
-                <p className="text-sm text-brand-muted">Order before 2PM for same-day Nairobi delivery</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Instagram size={20} className="mt-0.5 shrink-0 text-brand-gold" />
-              <div>
-                <a href="https://www.instagram.com/shoes_by_tinnsrack" target="_blank" rel="noopener noreferrer" className="font-semibold text-brand-white hover:text-brand-gold">
-                  @shoes_by_tinnsrack
-                </a>
-                <p className="text-sm text-brand-muted">
-                  Dresses on our sister page{" "}
-                  <a href="https://www.instagram.com/the_tinnsrack/" target="_blank" rel="noopener noreferrer" className="text-brand-gold hover:underline">
-                    @the_tinnsrack
-                  </a>
-                </p>
-              </div>
+        <dl className="grid gap-x-10 gap-y-10 self-end sm:grid-cols-2 lg:col-span-5 lg:col-start-8">
+          <div className="border-t border-ink pt-5">
+            <dt className="text-xs text-stone">Address</dt>
+            <dd className="mt-3 font-display text-[1.375rem] leading-snug">
+              {SHOP.addressLine1}
+              <br />
+              {SHOP.addressLine2}
+            </dd>
+            <a href={SHOP.mapsUrl} target="_blank" rel="noopener noreferrer" className="text-link mt-4 !text-sm">
+              Get directions
+            </a>
+          </div>
+          <div className="border-t border-ink pt-5">
+            <dt className="text-xs text-stone">Opening hours</dt>
+            <dd className="mt-3 font-display text-[1.375rem] leading-snug">
+              Monday to Saturday
+              <br />
+              9am – 7pm
+            </dd>
+          </div>
+          <div className="border-t border-ink pt-5">
+            <dt className="text-xs text-stone">Phone and WhatsApp</dt>
+            <dd className="mt-3 font-display text-[1.375rem]">
+              <a href={SHOP.phoneHref} className="hover:text-bordeaux">
+                {SHOP.phoneDisplay}
+              </a>
+            </dd>
+            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="text-link mt-4 !text-sm">
+              Message us on WhatsApp
+            </a>
+          </div>
+          <div className="border-t border-ink pt-5">
+            <dt className="text-xs text-stone">Instagram</dt>
+            <dd className="mt-3 space-y-1 text-[0.9375rem]">
+              <a href={SHOP.instagram} target="_blank" rel="noopener noreferrer" className="block hover:text-bordeaux">
+                {SHOP.instagramHandle}
+              </a>
+              <a href={SHOP.sisterInstagram} target="_blank" rel="noopener noreferrer" className="block text-ink/70 hover:text-bordeaux">
+                {SHOP.sisterHandle} for dresses
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section className="bg-tissue/60">
+        <div className="container-site grid gap-16 py-20 lg:grid-cols-12 lg:gap-12 lg:py-28">
+          <div className="lg:col-span-6">
+            <h2 className="display-lg">Questions, answered.</h2>
+            <div className="mt-10 border-t border-ink/15">
+              {faqList.map((f, i) => (
+                <details key={f.id} className="group accordion border-b border-ink/15" open={i === 0}>
+                  <summary className="!py-6 !text-base">
+                    <span className="pr-6">{f.q}</span>
+                    <AccordionIcon size={18} />
+                  </summary>
+                  <p className="max-w-xl pb-6 text-[0.9375rem] leading-relaxed text-ink/75">{f.a}</p>
+                </details>
+              ))}
             </div>
           </div>
 
-          <a
-            href="https://wa.me/254768008365"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-whatsapp btn-step w-full"
-          >
-            Chat with Us on WhatsApp
-          </a>
-
-          {sent ? (
-            <div className="card p-6 text-center">
-              <p className="text-brand-gold">
-                Thanks, {form.name || "friend"} — we&apos;ve got your message and will get back to you soon. 💛
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="card space-y-4 p-6">
-              <h3 className="font-display text-lg font-bold">Send Us a Message</h3>
-              <input
-                required
-                value={form.name}
-                onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                placeholder="Your name"
-                className="input"
-              />
-              <input
-                type="email"
-                value={form.email}
-                onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                placeholder="Your email (optional)"
-                className="input"
-              />
-              <textarea
-                required
-                rows={4}
-                value={form.message}
-                onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                placeholder="How can we help?"
-                className="input resize-none"
-              />
-              <button type="submit" className="btn-primary btn-step w-full">
-                Send Message
-              </button>
-            </form>
-          )}
+          <div className="lg:col-span-5 lg:col-start-8">
+            <h2 className="display-md">Write to us</h2>
+            <p className="mt-3 text-sm text-ink/70">We reply within a day. For anything urgent, WhatsApp is quickest.</p>
+            {sent ? (
+              <div className="mt-10 border-l-2 border-bordeaux py-2 pl-5">
+                <p className="font-display text-[1.375rem]">Thank you, {form.name.split(" ")[0]}.</p>
+                <p className="mt-2 text-sm text-ink/70">Your message is with us. We&apos;ll be in touch soon.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="mt-10 space-y-5">
+                <div>
+                  <label htmlFor="ct-name" className="field-label">Name</label>
+                  <input
+                    id="ct-name"
+                    required
+                    autoComplete="name"
+                    value={form.name}
+                    onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                    className="input"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="ct-email" className="field-label">Email (optional)</label>
+                  <input
+                    id="ct-email"
+                    type="email"
+                    autoComplete="email"
+                    value={form.email}
+                    onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                    className="input"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="ct-message" className="field-label">Message</label>
+                  <textarea
+                    id="ct-message"
+                    required
+                    rows={5}
+                    value={form.message}
+                    onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
+                    className="input resize-none"
+                  />
+                </div>
+                <button type="submit" className="btn-primary w-full sm:w-auto">
+                  Send message
+                </button>
+              </form>
+            )}
+          </div>
         </div>
-
-        <div>
-          <h3 className="mb-4 font-display text-xl font-bold">Frequently Asked</h3>
-          <FaqAccordion />
-        </div>
-      </div>
+      </section>
     </div>
   );
 }

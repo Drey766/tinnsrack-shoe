@@ -1,40 +1,71 @@
 import Link from "next/link";
+import Image from "next/image";
+import { Product } from "@/types";
+import { formatPrice, productTitle, whatsappLink } from "@/lib/utils";
 
-export default function HeroSection() {
+const HEADLINE = ["Heels worth", "dressing", "up for."];
+
+export default function HeroSection({ product }: { product: Product }) {
   return (
-    <section className="relative overflow-hidden bg-brand-black">
-      <div
-        className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[900px] -translate-x-1/2 -translate-y-1/3 rounded-full opacity-70"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(201,162,39,0.18) 0%, rgba(201,162,39,0.06) 45%, transparent 70%)",
-        }}
-      />
-      <div className="container-site relative flex min-h-[86vh] flex-col items-center justify-center py-24 text-center sm:min-h-[90vh]">
-        <span className="font-accent text-xl italic text-brand-gold sm:text-2xl">
-          Luxury & Classy Shoes
-        </span>
-        <h1 className="mt-4 max-w-3xl font-display text-5xl font-bold leading-[1.05] text-brand-white sm:text-6xl lg:text-7xl">
-          Step Out. Stand Out.
-        </h1>
-        <p className="mt-6 max-w-xl text-base leading-relaxed text-brand-light/85 sm:text-lg">
-          Heels, sandals & boots for the woman who means business — in every sense
-          of the word. Same-day delivery across Nairobi.
-        </p>
+    <section className="container-site pb-20 pt-8 sm:pt-12 lg:pb-24 lg:pt-12">
+      <div className="grid items-end gap-y-10 lg:grid-cols-12 lg:gap-x-8">
+        {/* Headline + intro — the headline deliberately runs over the photograph on desktop */}
+        <div className="pointer-events-none relative z-10 lg:col-span-12 lg:col-start-1 lg:row-start-1 lg:pb-4 [&_a]:pointer-events-auto">
+          <h1 className="display-xl text-ink">
+            {HEADLINE.map((line, i) => (
+              <span
+                key={line}
+                className={`block animate-rise ${i === 1 ? "pl-[0.9em] italic" : ""}`}
+                style={{ animationDelay: `${150 + i * 120}ms` }}
+              >
+                {line}
+              </span>
+            ))}
+          </h1>
 
-        <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-          <Link href="/shop" className="btn-primary btn-step">
-            Shop New In 👠
-          </Link>
-          <a
-            href="https://wa.me/254768008365?text=Hi%20The%20Tinnsrack!%20I%27d%20love%20some%20help%20finding%20a%20pair."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-whatsapp btn-step"
-          >
-            Chat with Us
-          </a>
+          <div className="mt-10 animate-rise sm:ml-[0.4em] lg:mt-14" style={{ animationDelay: "600ms" }}>
+            <p className="lede">
+              Satin mules, crystal pumps and Nine West classics, chosen pair by pair at our
+              Tom Mboya Street boutique — and at your door in Nairobi the same day.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+              <Link href="/shop" className="btn-primary">
+                Shop the collection
+              </Link>
+              <a
+                href={whatsappLink("Hi The Tinnsrack, I'd love some help finding a pair.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-link"
+              >
+                Ask us on WhatsApp
+              </a>
+            </div>
+          </div>
         </div>
+
+        {/* Feature image */}
+        <figure className="lg:col-span-5 lg:col-start-8 lg:row-start-1 xl:col-span-6 xl:col-start-7">
+          <Link
+            href={`/shop/${product.slug}`}
+            className="product-frame block aspect-[3/4] animate-unveil lg:aspect-auto lg:h-[min(76vh,46rem)]"
+          >
+            <Image
+              src={product.images[0]}
+              alt={`${product.brand} ${productTitle(product)} in ${product.color.toLowerCase()}`}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              className="object-cover object-bottom"
+            />
+          </Link>
+          <figcaption className="mt-4 flex items-baseline justify-between gap-4 text-xs text-stone">
+            <span>
+              On the cover: {productTitle(product)}, {product.color.toLowerCase()}
+            </span>
+            <span className="tabular-nums text-ink">{formatPrice(product.price)}</span>
+          </figcaption>
+        </figure>
       </div>
     </section>
   );

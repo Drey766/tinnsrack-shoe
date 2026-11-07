@@ -2,6 +2,7 @@
 
 import { X } from "lucide-react";
 import { useEffect } from "react";
+import { SHOP } from "@/lib/utils";
 
 interface SizeGuideModalProps {
   open: boolean;
@@ -35,49 +36,50 @@ export default function SizeGuideModal({ open, onClose }: SizeGuideModalProps) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/70" onClick={onClose} />
-      <div className="card relative w-full max-w-lg p-6 sm:p-8">
+    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:px-4" role="dialog" aria-modal="true" aria-labelledby="size-guide-title">
+      <div className="absolute inset-0 animate-fade-in bg-ink/40" onClick={onClose} />
+      <div className="relative max-h-[92vh] w-full max-w-lg animate-rise overflow-y-auto bg-porcelain p-6 sm:p-10">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 text-brand-muted hover:text-brand-gold"
+          className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center text-ink hover:text-bordeaux"
           aria-label="Close size guide"
+          autoFocus
         >
-          <X size={22} />
+          <X size={20} strokeWidth={1.4} />
         </button>
-        <span className="section-tag">Find Your Fit</span>
-        <h3 className="mt-1 text-2xl font-bold">Size Guide</h3>
-        <p className="mt-2 text-sm text-brand-muted">
-          A rough EU-to-common reference. Between sizes, or still unsure? Call or WhatsApp
-          us at 0768 008 365 — we'll help you get it right the first time.
+        <h2 id="size-guide-title" className="display-md">Size guide</h2>
+        <p className="mt-3 text-sm text-ink/70">
+          Our shoes are sized in EU. Measure your foot from heel to longest toe, in the evening when
+          it&apos;s at its largest, and match it to the chart.
         </p>
 
-        <div className="mt-5 overflow-hidden rounded-lg border border-brand-mid">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-brand-dark2 text-left">
-                <th className="px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-brand-muted">EU</th>
-                <th className="px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-brand-muted">UK</th>
-                <th className="px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-brand-muted">US</th>
-                <th className="px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-brand-muted">Foot length</th>
+        <table className="mt-8 w-full text-sm tabular-nums">
+          <thead>
+            <tr className="border-b border-ink text-left">
+              <th className="pb-3 font-medium">EU</th>
+              <th className="pb-3 font-medium">UK</th>
+              <th className="pb-3 font-medium">US</th>
+              <th className="pb-3 text-right font-medium">Foot length</th>
+            </tr>
+          </thead>
+          <tbody>
+            {SIZE_CHART.map((row) => (
+              <tr key={row.eu} className="border-b border-line">
+                <td className="py-3">{row.eu}</td>
+                <td className="py-3 text-ink/70">{row.uk}</td>
+                <td className="py-3 text-ink/70">{row.us}</td>
+                <td className="py-3 text-right text-ink/70">{row.footCm.toFixed(1)} cm</td>
               </tr>
-            </thead>
-            <tbody>
-              {SIZE_CHART.map((row) => (
-                <tr key={row.eu} className="border-t border-brand-mid/60">
-                  <td className="px-3 py-2.5 font-semibold text-brand-white">{row.eu}</td>
-                  <td className="px-3 py-2.5">{row.uk}</td>
-                  <td className="px-3 py-2.5">{row.us}</td>
-                  <td className="px-3 py-2.5">{row.footCm} cm</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
 
-        <p className="mt-4 text-xs text-brand-muted">
-          Tip: measure your foot in the evening, when it's at its largest, for the most
-          accurate fit.
+        <p className="mt-6 text-sm text-ink/70">
+          Between sizes? Call or WhatsApp us on{" "}
+          <a href={SHOP.phoneHref} className="text-ink underline underline-offset-4">
+            {SHOP.phoneDisplay}
+          </a>{" "}
+          and we&apos;ll tell you how each pair runs.
         </p>
       </div>
     </div>

@@ -5,156 +5,173 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-brand-black text-brand-light font-body antialiased;
+    @apply bg-porcelain font-sans text-base text-ink antialiased;
+    font-feature-settings: "kern", "liga";
   }
-  h1, h2, h3, h4 {
-    @apply font-display text-brand-white;
+  h1,
+  h2,
+  h3 {
+    @apply font-display font-normal tracking-display text-ink;
+    font-optical-sizing: auto;
   }
   ::selection {
-    @apply bg-brand-gold/30 text-brand-white;
+    @apply bg-bordeaux text-porcelain;
   }
-  *:focus-visible {
-    outline: 2px solid #C9A227;
-    outline-offset: 2px;
+  :focus-visible {
+    outline: 1.5px solid #4a1426;
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
 @layer components {
-  /* ---------- Buttons ---------- */
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3
-      text-sm font-semibold uppercase tracking-wider text-brand-black
-      transition-transform duration-200 active:scale-95;
-    background: linear-gradient(90deg, #C9A227, #E0BC46, #C9A227, #A5851C);
-    background-size: 200% auto;
-    animation: gold-shimmer 3s linear infinite;
-  }
-  .btn-primary:hover {
-    animation-duration: 1.4s;
-  }
-
-  .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border
-      border-brand-gold px-7 py-3 text-sm font-semibold uppercase tracking-wider
-      text-brand-gold transition-colors duration-200 hover:bg-brand-gold hover:text-brand-black;
-  }
-
-  .btn-whatsapp {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366]
-      px-7 py-3 text-sm font-semibold text-brand-black transition-transform
-      duration-200 hover:brightness-105 active:scale-95;
-  }
-
-  .btn-ghost {
-    @apply inline-flex items-center gap-1.5 text-sm text-brand-muted transition-colors
-      duration-200 hover:text-brand-gold;
-  }
-
-  /* ---------- Form elements ---------- */
-  .input {
-    @apply w-full rounded-lg border border-brand-mid bg-brand-dark2 px-4 py-3
-      text-brand-light placeholder:text-brand-muted/70 outline-none transition-colors
-      focus:border-brand-gold;
-  }
-
-  .label {
-    @apply text-xs font-semibold uppercase tracking-[0.14em] text-brand-muted;
-  }
-
-  /* ---------- Surfaces ---------- */
-  .card {
-    @apply rounded-2xl border border-brand-mid bg-brand-dark;
-  }
-
-  .shoe-card {
-    @apply relative overflow-hidden rounded-2xl border border-brand-mid bg-brand-dark
-      transition-transform duration-300 hover:-translate-y-1;
-  }
-  .shoe-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 50% 30%, rgba(201, 162, 39, 0.15), transparent 70%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-  .shoe-card:hover::after {
-    opacity: 1;
-  }
-
+  /* ---------- Layout ---------- */
   .container-site {
-    @apply mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-[1360px] px-5 sm:px-8 lg:px-12;
+  }
+  .section {
+    @apply py-20 sm:py-24 lg:py-32;
   }
 
-  .section-padding {
-    @apply py-16 sm:py-20 lg:py-24;
+  /* ---------- Type ---------- */
+  .display-xl {
+    @apply font-display font-normal tracking-display;
+    font-size: clamp(3.5rem, 10vw, 10rem);
+    line-height: 0.9;
+  }
+  .display-lg {
+    @apply font-display font-normal tracking-display;
+    font-size: clamp(2.25rem, 4.6vw, 4rem);
+    line-height: 1.02;
+  }
+  .display-md {
+    @apply font-display font-normal tracking-display;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.1;
+  }
+  .lede {
+    @apply max-w-[34rem] text-[1.125rem] leading-[1.7] text-ink/75;
+  }
+  .meta {
+    @apply text-xs text-stone;
   }
 
-  .section-tag {
-    @apply block font-accent italic text-brand-gold text-lg sm:text-xl;
+  /* ---------- Buttons ---------- */
+  .btn {
+    @apply inline-flex h-12 items-center justify-center gap-2.5 rounded-[2px] px-7 text-[0.9375rem]
+      font-medium tracking-[0.01em] transition-colors duration-200
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-bordeaux text-porcelain hover:bg-bordeaux-deep;
+  }
+  .btn-secondary {
+    @apply btn border border-ink/80 text-ink hover:bg-ink hover:text-porcelain;
+  }
+  .btn-light {
+    @apply btn bg-porcelain text-bordeaux hover:bg-tissue;
+  }
+  .text-link {
+    @apply inline-flex items-center gap-2 text-[0.9375rem] font-medium text-ink underline decoration-ink/30
+      decoration-1 underline-offset-[6px] transition-colors hover:decoration-ink;
   }
 
-  /* ---------- Blog prose ---------- */
+  /* ---------- Forms ---------- */
+  .field-label {
+    @apply mb-2 block text-xs font-medium text-ink/80;
+  }
+  .input {
+    @apply h-12 w-full rounded-[2px] border border-line bg-white px-4 text-[0.9375rem] text-ink
+      outline-none transition-colors placeholder:text-stone/70 hover:border-stone/60 focus:border-ink;
+  }
+  textarea.input {
+    @apply h-auto py-3;
+  }
+  select.input {
+    @apply appearance-none bg-no-repeat pr-10;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23231F20' stroke-width='1.5' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5'/%3E%3C/svg%3E");
+    background-position: right 1rem center;
+  }
+
+  /* ---------- Product imagery ---------- */
+  .product-frame {
+    @apply relative overflow-hidden bg-tissue;
+  }
+
+  /* ---------- Chips ---------- */
+  .size-chip {
+    @apply flex h-12 min-w-[3.25rem] items-center justify-center rounded-[2px] border border-line bg-white px-3
+      text-sm text-ink transition-colors duration-150 hover:border-ink
+      data-[selected=true]:border-ink data-[selected=true]:bg-ink data-[selected=true]:text-porcelain
+      disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .filter-chip {
+    @apply inline-flex h-9 items-center rounded-full border border-line bg-white px-3.5 text-xs text-ink
+      transition-colors hover:border-ink
+      data-[selected=true]:border-ink data-[selected=true]:bg-ink data-[selected=true]:text-porcelain;
+  }
+
+  /* ---------- Article prose ---------- */
   .prose-article {
-    @apply text-brand-light/90 leading-relaxed;
+    @apply text-[1.125rem] leading-[1.8] text-ink/85;
   }
   .prose-article h2 {
-    @apply mt-10 mb-3 font-display text-2xl text-brand-white;
+    @apply mb-4 mt-14 font-display text-[1.875rem] leading-tight text-ink;
+  }
+  .prose-article h3 {
+    @apply mb-3 mt-10 font-display text-[1.375rem] text-ink;
   }
   .prose-article p {
-    @apply mb-5 text-[1.05rem] leading-[1.8];
+    @apply mb-6;
+  }
+  .prose-article ul,
+  .prose-article ol {
+    @apply mb-6 space-y-2 pl-6;
+  }
+  .prose-article ul {
+    @apply list-disc;
+  }
+  .prose-article ol {
+    @apply list-decimal;
   }
   .prose-article a {
-    @apply text-brand-gold underline underline-offset-2;
+    @apply text-bordeaux underline decoration-bordeaux/40 underline-offset-4 hover:decoration-bordeaux;
+  }
+  .prose-article strong {
+    @apply font-medium text-ink;
+  }
+  .prose-article > p:first-child::first-letter {
+    @apply float-left mr-3 mt-1 font-display text-[4.5rem] leading-[0.8] text-bordeaux;
   }
 
-  /* ---------- Badges ---------- */
-  .badge-new {
-    @apply inline-flex items-center rounded-full bg-brand-gold px-3 py-1 text-[11px]
-      font-bold uppercase tracking-wide text-brand-black;
+  /* ---------- Accordion (native <details>) ---------- */
+  .accordion > summary {
+    @apply flex cursor-pointer list-none items-center justify-between py-5 text-[0.9375rem] font-medium text-ink;
   }
-  .badge-sale {
-    @apply inline-flex items-center rounded-full bg-brand-wine px-3 py-1 text-[11px]
-      font-bold uppercase tracking-wide text-brand-white;
-  }
-  .badge-lowstock {
-    @apply inline-flex items-center rounded-full bg-brand-blush px-3 py-1 text-[11px]
-      font-bold uppercase tracking-wide text-brand-black;
-  }
-  .badge-soldout {
-    @apply inline-flex items-center rounded-full bg-brand-mid px-3 py-1 text-[11px]
-      font-bold uppercase tracking-wide text-brand-light;
-  }
-  .badge-sameday {
-    @apply inline-flex items-center gap-1 rounded-full border border-brand-gold/60 px-3 py-1
-      text-[11px] font-semibold uppercase tracking-wide text-brand-gold;
-  }
-
-  .occasion-tag {
-    @apply inline-flex items-center rounded-full bg-brand-blush/15 px-2.5 py-1 text-[11px]
-      font-medium text-brand-blush-light;
-  }
-
-  .size-chip {
-    @apply flex h-11 min-w-11 items-center justify-center rounded-lg border border-brand-mid
-      px-3 text-sm text-brand-light transition-colors duration-150
-      hover:border-brand-gold data-[selected=true]:border-brand-gold
-      data-[selected=true]:bg-brand-gold data-[selected=true]:text-brand-black
-      disabled:cursor-not-allowed disabled:opacity-30;
+  .accordion > summary::-webkit-details-marker {
+    display: none;
   }
 }
 
-/* Marquee strip */
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 32s linear infinite;
-}
-
-/* Heel-click micro interaction */
-.btn-step:active {
-  transform: scale(0.94);
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }

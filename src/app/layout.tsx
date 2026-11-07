@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Playfair_Display, Cormorant_Garamond, DM_Sans } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Bodoni_Moda, Jost } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
@@ -7,32 +7,24 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
 
-const playfair = Playfair_Display({
+const bodoni = Bodoni_Moda({
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-playfair",
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  variable: "--font-display",
   display: "swap",
 });
 
-const cormorant = Cormorant_Garamond({
+const jost = Jost({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["italic", "normal"],
-  variable: "--font-cormorant",
-  display: "swap",
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-dmsans",
+  variable: "--font-sans",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "The Tinnsrack — Luxury & Classy Shoes | Nairobi",
+  title: "The Tinnsrack — Luxury Women's Shoes, Nairobi",
   description:
-    "Heels, sandals & boots for the woman who means business — in every sense of the word. Same-day delivery across Nairobi. Shop F17, Beba Beba Trade Center, Tom Mboya Street.",
+    "Satin mules, crystal pumps and designer heels, chosen pair by pair at our Tom Mboya Street boutique. Same-day delivery across Nairobi; pay with M-Pesa.",
   keywords: [
     "shoes Nairobi",
     "heels Kenya",
@@ -41,26 +33,26 @@ export const metadata: Metadata = {
     "same day shoe delivery Nairobi",
   ],
   openGraph: {
-    title: "The Tinnsrack — Luxury & Classy Shoes",
+    title: "The Tinnsrack — Luxury Women's Shoes, Nairobi",
     description:
-      "Heels, sandals & boots for the woman who means business. Same-day delivery across Nairobi.",
+      "Satin mules, crystal pumps and designer heels. Same-day delivery across Nairobi.",
     type: "website",
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const viewport: Viewport = {
+  themeColor: "#FAF7F5",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${cormorant.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${bodoni.variable} ${jost.variable}`}>
       <body>
         <CartProvider>
           <WishlistProvider>
             <Navbar />
             <CartDrawer />
-            <main className="min-h-screen">{children}</main>
+            <main className="min-h-[60vh]">{children}</main>
             <Footer />
           </WishlistProvider>
         </CartProvider>
